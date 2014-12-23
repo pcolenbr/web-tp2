@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 					banner: '/* Css Mimificado */ \n' + '/* <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */'
 				},
 				files: {
-				'css/style.css': ['css/src/**/*.css']
+				'css/style.min.css': ['css/src/**/*.css']
 				}
 			}
 		},
