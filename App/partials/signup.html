@@ -1,0 +1,17 @@
+
+<form name="signupForm" class="form-horizontal" role="form">
+<input type="text" class="form-control" placeholder="Email" name="email" ng-model="user.email" focus/>
+<span ng-show="signupForm.email.$error.email" class="help-inline">Email não é válido</span> 
+
+<input type="password" class="form-control" name = "password" placeholder="Password" ng-model="user.passwd" required/>
+
+<input type="password" class="form-control" name="password2" placeholder="Password Again" ng-model="user.password2" password-match="user.passwd" required/>
+
+<small class="errorMessage" data-ng-show="signupForm.password2.$dirty && signupForm.password2.$error.passwordNoMatch && !signupForm.password2.$error.required"> Senhas não são iguais.</small>
+
+<input type="text" class="form-control" placeholder="Name" ng-model="user.name"/>
+
+<input type="date" class="form-control" ng-model="user.birthday"/>
+
+<button type="submit" class="width-35 pull-right btn btn-sm btn-primary" ng-click="signUp(user)" data-ng-disabled="signupForm.$invalid">Sign Up</button>
+</form>

@@ -1,0 +1,17 @@
+.fadeIn.ng-enter,
+.fadeIn.ng-leave {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+}
+
+.fadeIn.ng-leave.ng-leave-active {
+	display: none;
+}
+
+.fadeIn.ng-enter {
+  opacity:0;
+}
+.fadeIn.ng-leave,
+.fadeIn.ng-enter.ng-enter-active {
+  opacity:1;
+}
