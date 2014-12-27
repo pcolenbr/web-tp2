@@ -16,11 +16,11 @@ $app->post('/login', function() use ($app) {
     $db = new DB_Handler();
     $passwd = $r->customer->passwd;
     $email = $r->customer->email;
-    $user = $db->get_singleRow("SELECT * FROM web_tp2.usuario WHERE email_usuario = '" . $email . "' AND passwd_usuario = '" . $passwd ."';");
+    $user = $db->get_singleRow("SELECT * FROM web_tp2.usuario WHERE email_usuario = '" . $email . "';");
     if ($user != NULL) {
         if(passwdHash::check_password($user['passwd_usuario'],$passwd)) {
             $response['status'] = "success";
-            $response['message'] = "Bem vindo " . $user['nome_usuario'] . ".";
+            $response['message'] = "Bem vindo '" . $user['nome_usuario'] . "'.";
             $response['uid'] = $user['id_usuario'];
             $response['nome'] = $user['nome_usuario'];
             $response['email'] = $user['email_usuario'];
