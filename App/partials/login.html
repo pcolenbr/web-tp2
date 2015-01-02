@@ -1,14 +1,21 @@
-<div>
-	<form>
+<style type="text/css">
+	html {
+		background: #F2F5E9;
+	}
+</style>
+<div id="wrap_login">
+	<h1>Welcome to Agenda!</h1>
 
-		<input type="text" class="form-control" placeholder="Email / Phone" name="email" ng-model="login.email" required/>
+	<div id="div_form">
+		<form>
+			<input type="text" class="form-control input-login" placeholder="Email" name="email" ng-model="login.email" required/>
 
-		<input type="password" class="form-control" placeholder="Password" ng-model="login.passwd" required/>
-		
-		<button type="submit" class="width-35 btn btn-sm btn-primary" ng-click="doLogin(login)">
-            Login
-		</button>
+			<input type="password" class="form-control input-login" placeholder="Password" ng-model="login.passwd" required/>
+			
+			<a class="p_link_hover" href="#/signup">Signup</a>
 
-		<a href="#/signup">Signup</a>
-	</form>
+			<button type="submit" class="pull-right btn btn-md btn-primary" ng-click="doLogin(login)">Login</button>
+		</form>
+	</div>
+
 </div>

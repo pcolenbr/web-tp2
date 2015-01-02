@@ -1,0 +1,42 @@
+@import "variables.less";
+
+@media ( max-width : 767px) {
+
+}
+
+@media ( min-width : 768px) {
+	#wrap_login {
+
+		#div_form {
+			min-width: 400px;
+		}
+	}
+}
+
+@media ( min-width : 993px) {
+
+}
+
+@media ( min-width : 1201px) {
+
+}
+
+#wrap_login {
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	h1 {
+	  	text-align: center;
+	}
+	#div_form {
+	  	padding: 30px;
+	  	background: #fff;
+	  	border-radius: @border_radius;
+	  	box-shadow: 3px 3px 13px 0px rgba(50, 50, 50, 0.49);
+
+	  	.input-login {
+	  		margin-bottom: 10px;
+	  	}
+	}
+}

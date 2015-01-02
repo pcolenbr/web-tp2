@@ -1,0 +1,23 @@
+@media (min-width: 768px) {
+  #wrap_login #div_form {
+    min-width: 400px;
+  }
+}
+#wrap_login {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#wrap_login h1 {
+  text-align: center;
+}
+#wrap_login #div_form {
+  padding: 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 3px 3px 13px 0px rgba(50, 50, 50, 0.49);
+}
+#wrap_login #div_form .input-login {
+  margin-bottom: 10px;
+}
