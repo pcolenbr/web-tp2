@@ -1,3 +1,14 @@
-<div style="height: 300px; width: 300px; background: black;">
-	<a ng-click="logout();">Logout</a>
+<div id="wrap_dashboard" ng-controller="calendarCtrl">
+
+	<div class="menu">
+		<button type="submit" class="pull-left btn btn-md btn-primary" ng-click="logout()">Logout</button>
+		<button type="submit" class="pull-right btn btn-md btn-primary" ng-click="openAddDialog()">Add Event</button>
+	</div>
+
+	<div class="col-md-9">
+		<div class="calendar">
+			<div ui-calendar="calendarConfig.calendar" ng-model="events">
+		</div>
+	</div>
+
 </div>

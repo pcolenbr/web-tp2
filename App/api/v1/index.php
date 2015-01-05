@@ -10,8 +10,9 @@ $app = new \Slim\Slim();
 // User id from db - Global Variable
 $user_id = NULL;
 
-require_once 'instituicao.php';
 require_once 'authentication.php';
+require_once 'instituicao.php';
+require_once 'eventos.php';
 
 function verifyRequiredParams($required_fields,$request_params) {
     $error = false;

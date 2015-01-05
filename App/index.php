@@ -10,6 +10,9 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 		<link rel="stylesheet" href="css/toaster.css" type="text/css" />
 		<link rel="stylesheet" href="css/animations.css" type="text/css" />
+		<link rel="stylesheet" href="css/fullcalendar.min.css" type="text/css" />
+		<link rel="stylesheet" href="css/ngDialog.min.css" type="text/css" />
+		<link rel="stylesheet" href="css/ngDialog-theme-plain.min.css" type="text/css" />
 		<link rel="stylesheet" href="css/style.min.css" type="text/css" />
 		
 	</head>
@@ -24,13 +27,21 @@
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/moment.min.js"></script>
 	<script src="js/angular.min.js"></script>
 	<script src="js/angular-route.min.js"></script>
 	<script src="js/angular-animate.min.js"></script>
+	<script src="js/ngDialog.min.js"></script>
 	<script src="js/toaster.js"></script>
+
+	<script src="js/calendar.js"></script>
+	<script src="js/fullcalendar.min.js"></script>
+	<script src="js/gcal.js"></script>
+	<script src="js/pt-br.js"></script>
 
 	<script src="app/app.js"></script>
 	<script src="app/data.js"></script>
 	<script src="app/directives.js"></script>
 	<script src="app/authCtrl.js"></script>
+	<script src="app/calendarCtrl.js"></script>
 </html>

@@ -1,6 +1,7 @@
 html {
   min-height: 100%;
   position: relative;
+  background: #F2F5E9;
 }
 .p_link_hover:hover {
   text-decoration: none;
