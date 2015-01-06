@@ -41,6 +41,24 @@ class DB_Handler {
         }
     }
 
+    public function update_register($table_name, $column_names, $values, $id_column, $id_value) {
+        $update_statement = '';
+
+        for($i = 0; $i < count($column_names); $i++) {
+            $update_statement = $update_statement . "`" . $column_names[$i] . "` = '" . $values[$i] . "', ";
+        }
+
+        $sql = "UPDATE `web_tp2`.`" . $table_name . "` SET " . rtrim($update_statement, ' ,') . " WHERE `" . $id_column . "` = '" . $id_value . "';";
+
+        $query = $this->conn->query($sql) or die($this->conn->error.__LINE__);
+        if ($query) {
+            return $id_value;
+        } else {
+            return NULL;
+        }
+
+    }
+
     public function getSession(){
         if (!isset($_SESSION)) {
             session_start();

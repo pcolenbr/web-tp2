@@ -1,3 +1,9 @@
+#wrap_dashboard {
+  background: #F2F5E9;
+}
 #wrap_dashboard .calendar {
   margin-bottom: 10px;
+}
+#wrap_dashboard .calendar .fc-view-container {
+  background: #fff;
 }

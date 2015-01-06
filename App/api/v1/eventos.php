@@ -62,4 +62,37 @@ $app->post('/createEvent', function() use ($app) {
 
 });
 
+$app->post('/editEvent', function() use ($app) {
+    $r = json_decode($app->request->getBody());
+    $response = array();
+    
+    verifyRequiredParams(array('id', 'nm', 'description', 'major', 'subject', 'start', 'end'), $r->currentEvent);
+
+    $db = new DB_Handler();
+
+    $id = $r->currentEvent->id;
+    $name = $r->currentEvent->nm;
+    $description = $r->currentEvent->description;
+    $start = date("Y-m-d", strtotime($r->currentEvent->start));
+    $end = date("Y-m-d", strtotime($r->currentEvent->end));
+    $subject = $r->currentEvent->subject;
+
+    $table_name = "evento";
+    $column_id = "id_evento";
+    $column_names = array('nome_evento', 'descricao_evento', 'data_inicio_evento', 'data_fim_evento', 'id_materia_evento');
+    $values = array($name, $description, $start, $end, $subject);
+    $result = $db->update_register($table_name, $column_names, $values, $column_id, $id);
+
+    if ($result != NULL) {
+        $response["status"] = "success";
+        $response["message"] = "Event updated successfully";
+        echoResponse(200, $response);
+    } else {
+        $response['status'] = "error";
+        $response['message'] = "Event could not be updated. Plese try again";
+        echoResponse(201, $response);
+    }
+
+});
+
 ?>

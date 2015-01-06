@@ -5,7 +5,7 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
   var m = date.getMonth();
   var y = date.getFullYear();
 
-  $scope.currentEvent = {nm:'', description:'', major:'', subject:'', start:'', end:''};
+  $scope.currentEvent = {id:'', nm:'', description:'', major:'', subject:'', start:'', end:''};
   $scope.majors = [];
   $scope.subjects = [];
 
@@ -19,12 +19,13 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
     listMajors();
     listClasses(event.majorId);
     $scope.currentEvent = {
+      id: event.id,
       nm: event.title,
       description: event.description,
       major: event.majorId,
       subject: event.subjectId,
       start: new Date(event.start),
-      end: ''
+      end: new Date(event.end)
     }
     ngDialog.open({ 
       template: 'partials/editEventDialog.html',
@@ -51,7 +52,7 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
 
     /**** Other Events ****/
     $scope.openAddDialog = function () {
-      $scope.currentEvent = {nm:'', description:'', major:'', subject:'', start:'', end:''};
+      $scope.currentEvent = {id:'', nm:'', description:'', major:'', subject:'', start:'', end:''};
       listMajors();
 
       ngDialog.open({ 
@@ -84,6 +85,18 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
       });
     };
 
+    $scope.editEvent = function (currentEvent) {
+      Data.post('editEvent', {
+        currentEvent: currentEvent
+      }).then(function (results) {
+        Data.toast(results);
+        if (results.status == "success") {
+          listEvents();
+          $scope.currentEvent = {id:'', nm:'', description:'', major:'', subject:'', start:'', end:''};
+        }
+      });
+    };
+
     
 
 
@@ -96,6 +109,7 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
           var data = results.eventos;
           for(var i in data) {
             $scope.events[i] = {
+              id: data[i].id_evento,
               title: data[i].nome_evento, 
               start: data[i].data_inicio_evento,
               description: data[i].descricao_evento,
