@@ -26,8 +26,7 @@
     	<div class="form-group">
         	<label for="inputClass">Class</label>
         	<select ng-model="currentEvent.subject" id="inputClass" class="form-control" ng-disabled="!currentEvent.major" ng-options="subject.id as subject.name for subject in subjects">
-        		<option value="" ng-show="subjects.length">-- Select a Class --</option>
-        		<option value="" ng-hide="subjects.length">-- No Class Found --</option>
+                <option value="">{{selectClassMessage}}</option>
         	</select>
     	</div>
 

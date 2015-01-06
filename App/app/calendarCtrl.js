@@ -9,6 +9,8 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
   $scope.majors = [];
   $scope.subjects = [];
 
+  $scope.selectClassMessage = "-- Select a Class --";
+
   $scope.events = [];
 
   listEvents();
@@ -140,10 +142,13 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
         Data.toast(results);
         if (results.status == "success") {
           var data = results.materias;
+          $scope.selectClassMessage = "-- Select a Class --";
           for(var i in data) {
             $scope.subjects[i] = {id: data[i].id_materia, name: data[i].nome_materia, ab:data[i].ab_materia};
           }
-        } 
+        } else {
+          $scope.selectClassMessage = "-- No Classes Found --";
+        }
       });
     } 
 
