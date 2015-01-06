@@ -5,7 +5,7 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
   var m = date.getMonth();
   var y = date.getFullYear();
 
-  $scope.currentEvent = {nm:''};
+  $scope.currentEvent = {nm:'', description:'', major:'', subject:'', start:'', end:''};
   $scope.majors = [];
   $scope.subjects = [];
 
@@ -13,34 +13,46 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
 
   listEvents();
 
+  /**** Dialog Events ****/
+
+  $scope.onEventClick = function( event, jsEvent, view){
+    listMajors();
+    listClasses(event.majorId);
+    $scope.currentEvent = {
+      nm: event.title,
+      description: event.description,
+      major: event.majorId,
+      subject: event.subjectId,
+      start: new Date(event.start),
+      end: ''
+    }
+    ngDialog.open({ 
+      template: 'partials/editEventDialog.html',
+      scope: $scope,
+      className: 'ngdialog-theme-plain'
+    });
+  };
+
+  /**** Dialog Config ****/
 	$scope.calendarConfig = {
     	calendar:{
         	editable: true,
           //lang: 'pt-br',
         	header:{
-          		left: 'month basicWeek basicDay agendaWeek agendaDay',
+          		left: 'month agendaWeek agendaDay',
           		center: 'title',
           		right: 'today prev,next'
         	},
+          contentHeight: 'auto',
           events: $scope.events,
-        	dayClick: $scope.alertEventOnClick,
-        	eventDrop: $scope.alertOnDrop,
-        	eventResize: $scope.alertOnResize
+        	eventClick: $scope.onEventClick
       	}
     };
 
-
+    /**** Other Events ****/
     $scope.openAddDialog = function () {
-
-      Data.post('getMajors', null).then(function (results) {
-        Data.toast(results);
-        if (results.status == "success") {
-          var data = results.cursos;
-          for(var i in data) {
-            $scope.majors[i] = {id: data[i].id_curso, name: data[i].nome_curso, ab:data[i].ab_curso};
-          }
-        }
-      });
+      $scope.currentEvent = {nm:'', description:'', major:'', subject:'', start:'', end:''};
+      listMajors();
 
       ngDialog.open({ 
         template: 'partials/newEventDialog.html',
@@ -50,24 +62,15 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
     };
 
     $scope.$on('ngDialog.opened', function (event, $dialog) {
-        $dialog.find('.ngdialog-content').css('width', '400px');
-        $dialog.find('.ngdialog-content').css('border-radius', '10px');
-        $dialog.find('.ngdialog-content').css('box-shadow', '3px 3px 13px 0px rgba(50, 50, 50, 0.49)');
-      })
+      $dialog.find('.ngdialog-content').css('width', '400px');
+      $dialog.find('.ngdialog-content').css('border-radius', '10px');
+      $dialog.find('.ngdialog-content').css('padding', '0px 0px 10px');
+      $dialog.find('.ngdialog-content').css('box-shadow', '3px 3px 13px 0px rgba(50, 50, 50, 0.49)');
+    })
 
-    $scope.majorSelected = function (major) {
+    $scope.majorSelected = function (majorId) {
       $scope.subjects = [];
-      Data.post('getClasses', {
-        id_curso: major
-      }).then(function (results) {
-        Data.toast(results);
-        if (results.status == "success") {
-          var data = results.materias;
-          for(var i in data) {
-            $scope.subjects[i] = {id: data[i].id_materia, name: data[i].nome_materia, ab:data[i].ab_materia};
-          }
-        } 
-      });
+      listClasses(majorId);
     };
 
     $scope.addEvent = function (currentEvent) {
@@ -81,16 +84,53 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
       });
     };
 
+    
+
+
+
+
     function listEvents() {
       Data.post('getEvents', null).then(function (results) {
         Data.toast(results);
         if (results.status == "success") {
           var data = results.eventos;
           for(var i in data) {
-            $scope.events[i] = {title: data[i].nome_evento, start:data[i].data_inicio_evento};
+            $scope.events[i] = {
+              title: data[i].nome_evento, 
+              start: data[i].data_inicio_evento,
+              description: data[i].descricao_evento,
+              majorId: data[i].id_curso,
+              subjectId: data[i].id_materia
+            };
           }
         }
       });
     }
+
+    function listMajors() {
+      Data.post('getMajors', null).then(function (results) {
+        Data.toast(results);
+        if (results.status == "success") {
+          var data = results.cursos;
+          for(var i in data) {
+            $scope.majors[i] = {id: data[i].id_curso, name: data[i].nome_curso, ab:data[i].ab_curso};
+          }
+        }
+      });
+    }
+
+    function listClasses(majorId) {
+      Data.post('getClasses', {
+        id_curso: majorId
+      }).then(function (results) {
+        Data.toast(results);
+        if (results.status == "success") {
+          var data = results.materias;
+          for(var i in data) {
+            $scope.subjects[i] = {id: data[i].id_materia, name: data[i].nome_materia, ab:data[i].ab_materia};
+          }
+        } 
+      });
+    } 
 
 });

@@ -1,14 +1,28 @@
-<div id="wrap_dashboard" ng-controller="calendarCtrl">
+<div id="wrap_dashboard" ng-controller="calendarCtrl" class="clearfix">
 
-	<div class="menu">
-		<button type="submit" class="pull-left btn btn-md btn-primary" ng-click="logout()">Logout</button>
-		<button type="submit" class="pull-right btn btn-md btn-primary" ng-click="openAddDialog()">Add Event</button>
-	</div>
+	<nav class="navbar navbar-default navbar-static-top menuTop">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand">Agenda</a>
+			</div>
 
-	<div class="col-md-9">
-		<div class="calendar">
-			<div ui-calendar="calendarConfig.calendar" ng-model="events">
+			<div id="menu" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a class="pull-left btn-menu" ng-click="openAddDialog()"><i class="glyphicon glyphicon-briefcase"></i>Add Event</a></li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><a class="pull-right btn-menu" ng-click="logout()"><i class="glyphicon glyphicon-off"></i>Logout</a></li>
+				</ul>
+			</div>
 		</div>
+	</nav>
+
+	<div class="col-md-9 calendar">
+		<div ui-calendar="calendarConfig.calendar" ng-model="events" />
 	</div>
 
+	<footer>
+		<p>© Copyright 2015</p>
+	</footer>
 </div>

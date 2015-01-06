@@ -1,7 +1,68 @@
+@import "variables.less";
+
+@media ( max-width : 767px) {
+
+}
+
+@media ( min-width : 768px) {
+	
+}
+
+@media ( min-width : 993px) {
+
+}
+
+@media ( min-width : 1201px) {
+
+}
+
 html {
 	min-height: 100%;
 	position: relative;
 	background: #F2F5E9;
+}
+
+body {
+	margin-bottom: 25px;
+}
+
+/**** Menu ****/
+.menuTop {
+	background: #2E7A21;
+
+	.navbar-brand {
+		color: @color_menu !important;
+	}
+	.btn-menu {
+		color: @color_menu !important;
+		background: #439136;
+		box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.49);
+		i {
+			margin-right: 7px;
+		}
+	}
+
+	.btn-menu:hover {
+		text-decoration: none;
+		cursor: pointer;
+		opacity: 0.7;
+	}
+
+}
+/**** Fim Menu ****/
+
+footer {
+	background: #2E7A21;
+	bottom: 0;
+	position: absolute;
+	height: 25px;
+	width: 100%;
+	text-align: center;
+	color: @color_menu;
+	padding-top: 3px;
+	p {
+		margin-bottom: 0px;
+	}
 }
 
 .p_link_hover:hover {
