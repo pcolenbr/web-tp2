@@ -31,15 +31,19 @@ $app->post('/createEvent', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $response = array();
     
-    verifyRequiredParams(array('nm'), $r->currentEvent);
+    verifyRequiredParams(array('nm', 'description', 'subject', 'start'), $r->currentEvent);
 
     $db = new DB_Handler();
 
     $name = $r->currentEvent->nm;
+    $description = $r->currentEvent->description;
+    $start = date("Y-m-d", strtotime($r->currentEvent->start));
+    $end = date("Y-m-d", strtotime($r->currentEvent->end));
+    $subject = $r->currentEvent->subject;
 
     $table_name = "evento";
-    $column_names = array('nome_evento', 'data_inicio_evento', 'id_materia_evento');
-    $values = array($name, '2015-01-05', '1');
+    $column_names = array('nome_evento', 'descricao_evento', 'data_inicio_evento', 'data_fim_evento', 'id_materia_evento');
+    $values = array($name, $description, $start, $end, $subject);
     $result = $db->create_register($table_name, $column_names, $values);
 
     if ($result != NULL) {

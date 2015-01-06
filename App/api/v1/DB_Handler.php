@@ -31,6 +31,7 @@ class DB_Handler {
         }
 
         $sql = "INSERT INTO `web_tp2`.`" . $table_name . "` (" . rtrim($insert_columns, ' ,') . ") VALUES (" . rtrim($insert_values, ' ,') . ");";
+
         $query = $this->conn->query($sql) or die($this->conn->error.__LINE__);
         if ($query) {
             $new_row_id = $this->conn->lastInsertId();

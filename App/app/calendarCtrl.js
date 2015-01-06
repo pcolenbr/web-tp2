@@ -6,17 +6,12 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
   var y = date.getFullYear();
 
   $scope.currentEvent = {nm:''};
+  $scope.majors = [];
+  $scope.subjects = [];
+
   $scope.events = [];
 
-  Data.post('getEvents', null).then(function (results) {
-    Data.toast(results);
-    if (results.status == "success") {
-      var data = results.eventos;
-      for(var i in data) {
-        $scope.events[i] = {title: data[i].nome_evento, start:data[i].data_inicio_evento};
-      }
-    }
-  });
+  listEvents();
 
 	$scope.calendarConfig = {
     	calendar:{
@@ -36,6 +31,17 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
 
 
     $scope.openAddDialog = function () {
+
+      Data.post('getMajors', null).then(function (results) {
+        Data.toast(results);
+        if (results.status == "success") {
+          var data = results.cursos;
+          for(var i in data) {
+            $scope.majors[i] = {id: data[i].id_curso, name: data[i].nome_curso, ab:data[i].ab_curso};
+          }
+        }
+      });
+
       ngDialog.open({ 
         template: 'partials/newEventDialog.html',
         scope: $scope,
@@ -43,20 +49,48 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
       });
     };
 
+    $scope.$on('ngDialog.opened', function (event, $dialog) {
+        $dialog.find('.ngdialog-content').css('width', '400px');
+        $dialog.find('.ngdialog-content').css('border-radius', '10px');
+        $dialog.find('.ngdialog-content').css('box-shadow', '3px 3px 13px 0px rgba(50, 50, 50, 0.49)');
+      })
+
+    $scope.majorSelected = function (major) {
+      $scope.subjects = [];
+      Data.post('getClasses', {
+        id_curso: major
+      }).then(function (results) {
+        Data.toast(results);
+        if (results.status == "success") {
+          var data = results.materias;
+          for(var i in data) {
+            $scope.subjects[i] = {id: data[i].id_materia, name: data[i].nome_materia, ab:data[i].ab_materia};
+          }
+        } 
+      });
+    };
 
     $scope.addEvent = function (currentEvent) {
-
       Data.post('createEvent', {
         currentEvent: currentEvent
       }).then(function (results) {
         Data.toast(results);
         if (results.status == "success") {
-          $scope.events.push({
-            title: $scope.currentEvent.nm,
-            start: new Date(y, m, 7)
-          });
+          listEvents();
         }
       });
     };
+
+    function listEvents() {
+      Data.post('getEvents', null).then(function (results) {
+        Data.toast(results);
+        if (results.status == "success") {
+          var data = results.eventos;
+          for(var i in data) {
+            $scope.events[i] = {title: data[i].nome_evento, start:data[i].data_inicio_evento};
+          }
+        }
+      });
+    }
 
 });

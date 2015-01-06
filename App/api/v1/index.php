@@ -13,6 +13,8 @@ $user_id = NULL;
 require_once 'authentication.php';
 require_once 'instituicao.php';
 require_once 'eventos.php';
+require_once 'cursos.php';
+require_once 'materias.php';
 
 function verifyRequiredParams($required_fields,$request_params) {
     $error = false;
