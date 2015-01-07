@@ -18,17 +18,24 @@
 
     	<div class="form-group">
         	<label for="inputMajor">Major</label>
-        	<select ng-model="currentEvent.major" id="inputMajor" class="form-control" ng-options="major.id as major.name for major in majors" ng-change="majorSelected(currentEvent.major)">
-        		<option value="">-- Select a Major --</option>
+        	<select ng-model="currentEvent.major" id="inputMajor" class="form-control" ng-options="major.id as major.name for major in majors" ng-change="majorSelected(currentEvent.major, false)">
+        		<option disabled value="">-- Select a Major --</option>
         	</select>
     	</div>
 
     	<div class="form-group">
-        	<label for="inputClass">Class</label>
-        	<select ng-model="currentEvent.subject" id="inputClass" class="form-control" ng-disabled="!currentEvent.major" ng-options="subject.id as subject.name for subject in subjects">
-        		<option value="">{{selectClassMessage}}</option>
-        	</select>
-    	</div>
+            <label for="inputClass">Class</label>
+            <select ng-model="currentEvent.subjectName" id="inputClass" class="form-control" ng-options="subject.name for subject in subjects track by subject.name" ng-change="classSelected(currentEvent.subjectName, false)">
+                <option disabled value="">{{selectClassMessage}}</option>
+            </select>
+        </div>
+
+        <div class="form-group slide-down" ng-class="animation" ng-show="currentEvent.subjectName">
+            <label for="inputClass">Year/Semester</label>
+            <select ng-model="currentEvent.subjectId" id="inputClass" class="form-control" ng-options="yearPeriod.id as yearPeriod.year for yearPeriod in yearsPeriods">
+                <option disabled value="">-- Select an Year --</option>
+            </select>
+        </div>
 
     	<div class="form-group clearfix dates">
 	    	<div class="col-sm-6">

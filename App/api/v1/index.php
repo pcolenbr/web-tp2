@@ -20,7 +20,7 @@ function verifyRequiredParams($required_fields,$request_params) {
     $error = false;
     $error_fields = "";
     foreach ($required_fields as $field) {
-        if (!isset($request_params->$field) || strlen(trim($request_params->$field)) <= 0) {
+        if (!isset($request_params->$field)) {
             $error = true;
             $error_fields .= $field . ', ';
         }

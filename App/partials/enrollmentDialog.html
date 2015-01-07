@@ -1,0 +1,35 @@
+<div id="wrap_enrollment" class="eventDialog">
+
+	<div class="dialog-header">
+        <h4>Enrollment</h4>
+    </div>
+
+    <form name="newEventForm" class="form-horizontal" role="form">
+
+    	<div class="form-group">
+        	<label for="inputMajor">Major</label>
+        	<select ng-model="enrollment.major" id="inputMajor" class="form-control" ng-options="major.id as major.name for major in majors" ng-change="majorSelected(enrollment.major, true)">
+        		<option disabled value="">-- Select a Major --</option>
+        	</select>
+    	</div>
+
+    	<div class="form-group slide-down" ng-class="animation" ng-show="enrollment.major">
+        	<label for="inputClass">Class</label>
+        	<select ng-model="enrollment.subjectName" id="inputClass" class="form-control" ng-disabled="!enrollment.major" ng-options="subject.name for subject in subjects track by subject.name" ng-change="classSelected(enrollment.subjectName, true)">
+                <option disabled value="">{{selectClassMessage}}</option>
+        	</select>
+    	</div>
+
+        <div class="form-group slide-down" ng-class="animation" ng-show="enrollment.subjectName">
+            <label for="inputClass">Year/Semester</label>
+            <select ng-model="enrollment.subjectId" id="inputClass" class="form-control" ng-options="yearPeriod.id as yearPeriod.year for yearPeriod in yearsPeriods">
+                <option disabled value="">-- Select an Year --</option>
+            </select>
+        </div>
+
+    	<div class="clearfix" ng-show="enrollment.subjectId">
+			<button type="submit" class="pull-right btn btn-md btn-primary" ng-click="enroll(enrollment);closeThisDialog()">Enroll</button>
+		</div>
+	</form>
+
+</div>

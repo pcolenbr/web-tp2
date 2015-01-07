@@ -5,11 +5,13 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
   var m = date.getMonth();
   var y = date.getFullYear();
 
-  $scope.currentEvent = {id:'', nm:'', description:'', major:'', subject:'', start:'', end:''};
+  $scope.currentEvent = {id:'', nm:'', description:'', major:'', subjectName:'', subjectId:'', start:'', end:''};
+  $scope.enrollment = {major:'', subjectId:''};
   $scope.majors = [];
   $scope.subjects = [];
 
   $scope.selectClassMessage = "-- Select a Class --";
+  $scope.yearsPeriods = [];
 
   $scope.events = [];
 
@@ -18,17 +20,19 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
   /**** Dialog Events ****/
 
   $scope.onEventClick = function( event, jsEvent, view){
-    listMajors();
-    listClasses(event.majorId);
+    listMajors(false);
+    listClassesNames(event.majorId, false);
+    listYearsSemester({name: event.subjectName}, false);
     $scope.currentEvent = {
       id: event.id,
       nm: event.title,
       description: event.description,
       major: event.majorId,
-      subject: event.subjectId,
+      subjectName: event.subjectName,
+      subjectId: event.subjectId,
       start: new Date(event.start),
       end: new Date(event.end)
-    }
+    };
     ngDialog.open({ 
       template: 'partials/editEventDialog.html',
       scope: $scope,
@@ -54,8 +58,8 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
 
     /**** Other Events ****/
     $scope.openAddDialog = function () {
-      $scope.currentEvent = {id:'', nm:'', description:'', major:'', subject:'', start:'', end:''};
-      listMajors();
+      $scope.currentEvent = {id:'', nm:'', description:'', major:'', subjectName:'', subjectId:'', start:'', end:''};
+      listMajors(false);
 
       ngDialog.open({ 
         template: 'partials/newEventDialog.html',
@@ -71,9 +75,9 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
       $dialog.find('.ngdialog-content').css('box-shadow', '3px 3px 13px 0px rgba(50, 50, 50, 0.49)');
     })
 
-    $scope.majorSelected = function (majorId) {
+    $scope.majorSelected = function (majorId, enroll) {
       $scope.subjects = [];
-      listClasses(majorId);
+      listClassesNames(majorId, enroll)
     };
 
     $scope.addEvent = function (currentEvent) {
@@ -94,15 +98,58 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
         Data.toast(results);
         if (results.status == "success") {
           listEvents();
-          $scope.currentEvent = {id:'', nm:'', description:'', major:'', subject:'', start:'', end:''};
+          $scope.currentEvent = {id:'', nm:'', description:'', major:'', subjectName:'', subjectId:'', start:'', end:''};
         }
       });
     };
 
-    
+    $scope.openEnrollmentDialog = function () {
+      listMajors(true);
+
+      ngDialog.open({ 
+        template: 'partials/enrollmentDialog.html',
+        scope: $scope,
+        className: 'ngdialog-theme-plain'
+      });
+    };
+
+    $scope.enroll = function (enrollment) {
+      Data.post('enroll', {
+        enrollment: enrollment
+      }).then(function (results) {
+        Data.toast(results);
+        if (results.status == "success") {
+          listEvents();
+        }
+      });
+    };
+
+    $scope.classSelected = function (subjectName, enroll) {
+      $scope.yearsPeriods = [];
+      listYearsSemester(subjectName, enroll);
+    };
 
 
 
+
+
+    function listClassesNames(majorId, enroll) {
+      Data.post('getClassesNames', {
+        id_curso: majorId,
+        enroll: enroll
+      }).then(function (results) {
+        Data.toast(results);
+        if (results.status == "success") {
+          var data = results.materias;
+          $scope.selectClassMessage = "-- Select a Class --";
+          for(var i in data) {
+            $scope.subjects[i] = {name: data[i].nome_materia};
+          }
+        } else {
+          $scope.selectClassMessage = "-- No Classes Found --";
+        }
+      });
+    } 
 
     function listEvents() {
       Data.post('getEvents', null).then(function (results) {
@@ -116,15 +163,20 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
               start: data[i].data_inicio_evento,
               description: data[i].descricao_evento,
               majorId: data[i].id_curso,
-              subjectId: data[i].id_materia
+              subjectId: data[i].id_materia,
+              subjectName: data[i].nome_materia,
+              year: data[i].ano_materia + "/" + data[i].semestre_materia
             };
           }
         }
       });
     }
 
-    function listMajors() {
-      Data.post('getMajors', null).then(function (results) {
+    function listMajors(enroll) {
+      $scope.majors = [];
+      Data.post('getMajors', {
+        enroll: enroll
+      }).then(function (results) {
         Data.toast(results);
         if (results.status == "success") {
           var data = results.cursos;
@@ -135,21 +187,20 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
       });
     }
 
-    function listClasses(majorId) {
-      Data.post('getClasses', {
-        id_curso: majorId
+    function listYearsSemester(subjectName, enroll) {
+      $scope.yearsPeriods = [];
+      Data.post('listYearsSemester', {
+        nome_materia: subjectName,
+        enroll: enroll
       }).then(function (results) {
         Data.toast(results);
         if (results.status == "success") {
-          var data = results.materias;
-          $scope.selectClassMessage = "-- Select a Class --";
+          var data = results.anos;
           for(var i in data) {
-            $scope.subjects[i] = {id: data[i].id_materia, name: data[i].nome_materia, ab:data[i].ab_materia};
+            $scope.yearsPeriods[i] = {id: data[i].id_materia, year: data[i].ano_materia + "/" + data[i].semestre_materia};
           }
-        } else {
-          $scope.selectClassMessage = "-- No Classes Found --";
         }
       });
-    } 
+    }
 
 });
