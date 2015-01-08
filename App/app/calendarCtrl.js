@@ -15,6 +15,9 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
 
   $scope.events = [];
 
+  $scope.confirmationMessage = "";
+  $scope.confimationMethod = "";
+
   listEvents();
 
   /**** Dialog Events ****/
@@ -68,15 +71,7 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
       });
     };
 
-    $scope.$on('ngDialog.opened', function (event, $dialog) {
-      $dialog.find('.ngdialog-content').css('width', '400px');
-      $dialog.find('.ngdialog-content').css('border-radius', '10px');
-      $dialog.find('.ngdialog-content').css('padding', '0px 0px 10px');
-      $dialog.find('.ngdialog-content').css('box-shadow', '3px 3px 13px 0px rgba(50, 50, 50, 0.49)');
-    })
-
     $scope.majorSelected = function (majorId, enroll) {
-      $scope.subjects = [];
       listClassesNames(majorId, enroll)
     };
 
@@ -129,31 +124,45 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
       listYearsSemester(subjectName, enroll);
     };
 
-
-
-
-
-    function listClassesNames(majorId, enroll) {
-      Data.post('getClassesNames', {
-        id_curso: majorId,
-        enroll: enroll
-      }).then(function (results) {
-        Data.toast(results);
-        if (results.status == "success") {
-          var data = results.materias;
-          $scope.selectClassMessage = "-- Select a Class --";
-          for(var i in data) {
-            $scope.subjects[i] = {name: data[i].nome_materia};
-          }
-        } else {
-          $scope.selectClassMessage = "-- No Classes Found --";
-        }
+    $scope.openConfirmationDialog = function (option) {
+      if(option == "deleteEvent") {
+        $scope.confirmationMessage = "Are you sure you want to delete this event?";
+        $scope.confimationMethod = "delete";
+      }
+      ngDialog.open({ 
+        template: 'partials/confirmationDialog.html',
+        scope: $scope,
+        className: 'ngdialog-theme-plain'
       });
-    } 
+    };
+
+    $scope.confirmationMethod = function () {
+      if($scope.confimationMethod == "delete") {
+        deleteEvent();
+        ngDialog.closeAll();
+      }
+    };
+
+
+
+    $scope.$on('ngDialog.opened', function (event, $dialog) {
+      $dialog.find('.ngdialog-content').css('width', '400px');
+      $dialog.find('.ngdialog-content').css('border-radius', '10px');
+      $dialog.find('.ngdialog-content').css('padding', '0px 0px 10px');
+      $dialog.find('.ngdialog-content').css('box-shadow', '3px 3px 13px 0px rgba(50, 50, 50, 0.49)');
+    });
+
+    $scope.$watch('events', function() {
+      $scope.calendarConfig.calendar.events = $scope.events;
+    });
+
+
+
+
 
     function listEvents() {
+      $scope.events = [];
       Data.post('getEvents', null).then(function (results) {
-        Data.toast(results);
         if (results.status == "success") {
           var data = results.eventos;
           for(var i in data) {
@@ -172,12 +181,30 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
       });
     }
 
+    function listClassesNames(majorId, enroll) {
+      $scope.subjects = [];
+      Data.post('getClassesNames', {
+        id_curso: majorId,
+        enroll: enroll
+      }).then(function (results) {
+        if (results.status == "success") {
+          var data = results.materias;
+          $scope.selectClassMessage = "-- Select a Class --";
+          for(var i in data) {
+            $scope.subjects[i] = {name: data[i].nome_materia};
+          }
+        } else {
+          $scope.selectClassMessage = "-- No Classes Found --";
+        }
+      });
+    } 
+
     function listMajors(enroll) {
       $scope.majors = [];
       Data.post('getMajors', {
         enroll: enroll
       }).then(function (results) {
-        Data.toast(results);
+        
         if (results.status == "success") {
           var data = results.cursos;
           for(var i in data) {
@@ -193,12 +220,22 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
         nome_materia: subjectName,
         enroll: enroll
       }).then(function (results) {
-        Data.toast(results);
         if (results.status == "success") {
           var data = results.anos;
           for(var i in data) {
             $scope.yearsPeriods[i] = {id: data[i].id_materia, year: data[i].ano_materia + "/" + data[i].semestre_materia};
           }
+        }
+      });
+    }
+
+    function deleteEvent() {
+      Data.post('deleteEvent', {
+        currentEvent: $scope.currentEvent
+      }).then(function (results) {
+        Data.toast(results);
+        if (results.status == "success") {
+          listEvents();
         }
       });
     }

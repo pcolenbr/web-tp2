@@ -59,6 +59,23 @@ class DB_Handler {
 
     }
 
+    public function delete_register($table_name, $column_names, $values) {
+        $delete_statement = '';
+
+        for($i = 0; $i < count($column_names); $i++) {
+            $delete_statement = $delete_statement . "`" . $column_names[$i] . "` = '" . $values[$i] . "' AND ";
+        }
+
+        $sql = "DELETE FROM `web_tp2`.`" . $table_name . "` WHERE " . rtrim($delete_statement, ' AND');
+
+        $query = $this->conn->query($sql) or die($this->conn->error.__LINE__);
+        if ($query) {
+            return true;
+        } else {
+            return NULL;
+        }
+    }
+
     public function getSession(){
         if (!isset($_SESSION)) {
             session_start();

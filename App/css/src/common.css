@@ -8,7 +8,7 @@ body {
 }
 /**** Menu ****/
 .menuTop {
-  background: #2E7A21;
+  background: #2e7a21;
 }
 .menuTop .navbar-brand {
   color: #f3f3f3 !important;
@@ -28,7 +28,7 @@ body {
 }
 /**** Fim Menu ****/
 footer {
-  background: #2E7A21;
+  background: #2e7a21;
   bottom: 0;
   position: absolute;
   height: 25px;
@@ -45,4 +45,7 @@ footer p {
 }
 .form-group {
   padding: 0px 20px;
+}
+.btn-primary {
+  background: #2e7a21 !important;
 }

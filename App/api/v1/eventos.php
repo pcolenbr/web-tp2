@@ -19,6 +19,7 @@ $app->post('/getEvents', function() use ($app) {
 
     if ($eventos != NULL) {
         $response['status'] = "success";
+        $response['message'] = "All events listed";
         foreach ($eventos as $evento) {
             $response['eventos'][] = $evento;
         }
@@ -90,6 +91,33 @@ $app->post('/editEvent', function() use ($app) {
     } else {
         $response['status'] = "error";
         $response['message'] = "Event could not be updated. Plese try again";
+        echoResponse(201, $response);
+    }
+
+});
+
+$app->post('/deleteEvent', function() use ($app) {
+    $r = json_decode($app->request->getBody());
+    $response = array();
+    
+    verifyRequiredParams(array('id'), $r->currentEvent);
+
+    $db = new DB_Handler();
+
+    $id = $r->currentEvent->id;
+
+    $table_name = "evento";
+    $column_names = array('id_evento');
+    $values = array($id);
+    $result = $db->delete_register($table_name, $column_names, $values);
+
+    if ($result != NULL) {
+        $response["status"] = "success";
+        $response["message"] = "Event deleted successfully";
+        echoResponse(200, $response);
+    } else {
+        $response['status'] = "error";
+        $response['message'] = "Event could not be deleted. Plese try again";
         echoResponse(201, $response);
     }
 

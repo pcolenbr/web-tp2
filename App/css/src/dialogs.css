@@ -1,0 +1,25 @@
+.dialog-header {
+  background: #2E7A21;
+  color: #f3f3f3;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 1px 5px;
+  margin-bottom: 10px;
+}
+.dialogClass i {
+  margin-right: 3px;
+}
+.eventDialog .dates > div {
+  padding: 0px 3px;
+}
+.eventDialog form {
+  padding: 0px 10px 10px;
+}
+#wrap_confirmation_dialog p {
+  padding: 0px 10px;
+  font-size: 19px;
+}
+#wrap_confirmation_dialog .confimationButtons {
+  text-align: right;
+  padding-right: 10px;
+}
