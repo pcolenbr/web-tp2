@@ -1,4 +1,4 @@
-app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
+app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
 
   var date = new Date();
   var d = date.getDate();
@@ -43,6 +43,31 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
     });
   };
 
+  $scope.onEventHover = function( event, jsEvent, view){
+    $scope.currentEvent = {
+      id: event.id,
+      nm: event.title,
+      description: event.description,
+      major: event.majorId,
+      subjectName: event.subjectName,
+      subjectId: event.subjectId,
+      start: new Date(event.start),
+      end: new Date(event.end)
+    };;
+  };
+
+   $scope.eventRender = function( event, element, view ) { 
+      var text = "<h3>" + event.title + "</h3>" + "<div>" + "<p><strong>Description:</strong> " + event.description + "</p>" + "<p><strong>Major: </strong>" + event.majorName + "</p>" + "<p><strong>Subject:</strong> " + event.subjectName + " (" + event.year + ") " + "</p>" + "<p><strong>From:</strong> " + event.start + "</p>" + "<p><strong>To:</strong> " + event.end + "</p>" + "</div>";
+      element.attr({
+                    'tooltip-html-unsafe': text
+                  });
+      // element.attr({'popover-title': event.title,
+      //               'popover': text,
+      //               'popover-trigger': "mouseenter"
+      //             });
+      $compile(element)($scope);
+    };
+
   /**** Dialog Config ****/
 	$scope.calendarConfig = {
     	calendar:{
@@ -55,7 +80,8 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
         	},
           contentHeight: 'auto',
           events: $scope.events,
-        	eventClick: $scope.onEventClick
+        	eventClick: $scope.onEventClick,
+          eventRender: $scope.eventRender
       	}
     };
 
@@ -172,6 +198,7 @@ app.controller('calendarCtrl', function ($scope, Data, ngDialog) {
               start: data[i].data_inicio_evento,
               description: data[i].descricao_evento,
               majorId: data[i].id_curso,
+              majorName: data[i].nome_curso,
               subjectId: data[i].id_materia,
               subjectName: data[i].nome_materia,
               year: data[i].ano_materia + "/" + data[i].semestre_materia

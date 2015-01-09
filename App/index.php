@@ -33,6 +33,8 @@
 	<script src="js/angular-animate.min.js"></script>
 	<script src="js/ngDialog.min.js"></script>
 	<script src="js/toaster.js"></script>
+	<script src="js/ui-bootstrap.min.js"></script>
+	<script src="js/ui-bootstrap-tpls.min.js"></script>
 
 	<script src="js/calendar.js"></script>
 	<script src="js/fullcalendar.min.js"></script>

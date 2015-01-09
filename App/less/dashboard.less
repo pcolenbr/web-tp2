@@ -23,5 +23,38 @@
 		.fc-view-container {
 			background: #fff;
 		}
+
+		.tooltip {
+			box-shadow: 3px 3px 13px 0 rgba(50,50,50,.49);
+			padding: 0px;
+			.tooltip-arrow {
+				border-top-color: @verde_escuro;
+				border-width: 15px 15px 0;
+				margin-left: -15px;
+				bottom: -15px;
+			}
+			.tooltip-inner {
+	    		background: white;
+	    		color: black;
+	    		border: 1px solid @verde_escuro;
+	    		padding: 0px;
+			    h3 {
+			    	margin: 0px;
+			    	padding: 5px 0px;
+			    	color: @color_menu;
+			    	background: @verde_escuro;
+			    }
+			    div {
+			    	padding-top: 10px;
+			    	padding-bottom: 7px;
+			    }
+			    p {
+			    	text-align: left;
+			    	font-size: 14px;
+			    	padding: 0px 10px;
+			    	margin-bottom: 3px;
+			    }
+			}
+		}
 	}
 }
