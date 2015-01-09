@@ -28,6 +28,20 @@
 			
 			.tooltip-arrow {
 				border-top-color: @verde_escuro;
+				margin-left: -15px;
+				border-width: 10px 15px 0px;
+				bottom: -4px;
+			}
+			.tooltip-arrow:after {
+				content: " ";
+				bottom: 1px;
+				margin-left: -14px;
+				border-left: 14px solid transparent;
+				border-right: 14px solid transparent;
+				border-top: 10px solid white;
+				position: absolute;
+				width: 0;
+				height: 0;
 			}
 			.tooltip-inner {
 				box-shadow: 3px 3px 13px 0 rgba(50,50,50,.49);

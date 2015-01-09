@@ -9,6 +9,20 @@
 }
 #wrap_dashboard .calendar .tooltip .tooltip-arrow {
   border-top-color: #2e7a21;
+  margin-left: -15px;
+  border-width: 10px 15px 0px;
+  bottom: -4px;
+}
+#wrap_dashboard .calendar .tooltip .tooltip-arrow:after {
+  content: " ";
+  bottom: 1px;
+  margin-left: -14px;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 10px solid white;
+  position: absolute;
+  width: 0;
+  height: 0;
 }
 #wrap_dashboard .calendar .tooltip .tooltip-inner {
   box-shadow: 3px 3px 13px 0 rgba(50, 50, 50, 0.49);
