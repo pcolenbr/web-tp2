@@ -35,7 +35,7 @@ $app->post('/getEvents', function() use ($app) {
 $app->post('/createEvent', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $response = array();
-    
+
     verifyRequiredParams(array('nm', 'description', 'major', 'subjectId', 'start', 'end'), $r->currentEvent);
 
     $db = new DB_Handler();
@@ -66,7 +66,7 @@ $app->post('/createEvent', function() use ($app) {
 $app->post('/editEvent', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $response = array();
-    
+
     verifyRequiredParams(array('id', 'nm', 'description', 'major', 'subjectId', 'start', 'end'), $r->currentEvent);
 
     $db = new DB_Handler();

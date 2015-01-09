@@ -33,8 +33,8 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
       major: event.majorId,
       subjectName: event.subjectName,
       subjectId: event.subjectId,
-      start: new Date(event.start),
-      end: new Date(event.end)
+      start: Date.parse(event.start),
+      end: Date.parse(event.end)
     };
     ngDialog.open({ 
       template: 'partials/editEventDialog.html',
@@ -61,10 +61,6 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
       element.attr({
                     'tooltip-html-unsafe': text
                   });
-      /*element.attr({'popover-title': event.title,
-                    'popover': text,
-                    'popover-trigger': "mouseenter"
-                  });*/
       $compile(element)($scope);
     };
 
@@ -113,6 +109,8 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
     };
 
     $scope.editEvent = function (currentEvent) {
+      currentEvent.start = new Date(currentEvent.start);
+      currentEvent.end = new Date(currentEvent.end);
       Data.post('editEvent', {
         currentEvent: currentEvent
       }).then(function (results) {
@@ -183,6 +181,7 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
     });
 
 
+    
 
 
 
@@ -196,6 +195,7 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
               id: data[i].id_evento,
               title: data[i].nome_evento, 
               start: data[i].data_inicio_evento,
+              end: data[i].data_fim_evento,
               description: data[i].descricao_evento,
               majorId: data[i].id_curso,
               majorName: data[i].nome_curso,
