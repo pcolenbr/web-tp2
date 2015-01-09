@@ -7,17 +7,11 @@
 #wrap_dashboard .calendar .fc-view-container {
   background: #fff;
 }
-#wrap_dashboard .calendar .tooltip {
-  box-shadow: 3px 3px 13px 0 rgba(50, 50, 50, 0.49);
-  padding: 0px;
-}
 #wrap_dashboard .calendar .tooltip .tooltip-arrow {
   border-top-color: #2e7a21;
-  border-width: 15px 15px 0;
-  margin-left: -15px;
-  bottom: -15px;
 }
 #wrap_dashboard .calendar .tooltip .tooltip-inner {
+  box-shadow: 3px 3px 13px 0 rgba(50, 50, 50, 0.49);
   background: white;
   color: black;
   border: 1px solid #2e7a21;

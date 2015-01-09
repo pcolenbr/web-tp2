@@ -57,14 +57,14 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
   };
 
    $scope.eventRender = function( event, element, view ) { 
-      var text = "<h3>" + event.title + "</h3>" + "<div>" + "<p><strong>Description:</strong> " + event.description + "</p>" + "<p><strong>Major: </strong>" + event.majorName + "</p>" + "<p><strong>Subject:</strong> " + event.subjectName + " (" + event.year + ") " + "</p>" + "<p><strong>From:</strong> " + event.start + "</p>" + "<p><strong>To:</strong> " + event.end + "</p>" + "</div>";
+      var text = "<h3>" + event.title + "</h3>" + "<div>" + "<p><strong>Description:</strong> " + event.description + "</p>" + "<p><strong>Major: </strong>" + event.majorName + "</p>" + "<p><strong>Subject:</strong> " + event.subjectName + " (" + event.year + ") " + "</p>" + "</div>";
       element.attr({
                     'tooltip-html-unsafe': text
                   });
-      // element.attr({'popover-title': event.title,
-      //               'popover': text,
-      //               'popover-trigger': "mouseenter"
-      //             });
+      /*element.attr({'popover-title': event.title,
+                    'popover': text,
+                    'popover-trigger': "mouseenter"
+                  });*/
       $compile(element)($scope);
     };
 
