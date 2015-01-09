@@ -33,27 +33,15 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
       major: event.majorId,
       subjectName: event.subjectName,
       subjectId: event.subjectId,
-      start: Date.parse(event.start),
-      end: Date.parse(event.end)
+      start: event.start,
+      end: event.end.subtract(23, 'hours')
     };
+    
     ngDialog.open({ 
       template: 'partials/editEventDialog.html',
       scope: $scope,
       className: 'ngdialog-theme-plain'
     });
-  };
-
-  $scope.onEventHover = function( event, jsEvent, view){
-    $scope.currentEvent = {
-      id: event.id,
-      nm: event.title,
-      description: event.description,
-      major: event.majorId,
-      subjectName: event.subjectName,
-      subjectId: event.subjectId,
-      start: new Date(event.start),
-      end: new Date(event.end)
-    };;
   };
 
    $scope.eventRender = function( event, element, view ) { 
@@ -65,21 +53,23 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
     };
 
   /**** Dialog Config ****/
-	$scope.calendarConfig = {
-    	calendar:{
-        	editable: true,
+  $scope.calendarConfig = {
+      calendar:{
+          editable: true,
           //lang: 'pt-br',
-        	header:{
-          		left: 'month agendaWeek agendaDay',
-          		center: 'title',
-          		right: 'today prev,next'
-        	},
+          header:{
+              left: 'month agendaWeek agendaDay',
+              center: 'title',
+              right: 'today prev,next'
+          },
           contentHeight: 'auto',
+          timezone: 'UTC',
           events: $scope.events,
-        	eventClick: $scope.onEventClick,
+          eventClick: $scope.onEventClick,
           eventRender: $scope.eventRender
-      	}
+        }
     };
+
 
     /**** Other Events ****/
     $scope.openAddDialog = function () {
@@ -109,8 +99,6 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
     };
 
     $scope.editEvent = function (currentEvent) {
-      currentEvent.start = new Date(currentEvent.start);
-      currentEvent.end = new Date(currentEvent.end);
       Data.post('editEvent', {
         currentEvent: currentEvent
       }).then(function (results) {
@@ -181,8 +169,6 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
     });
 
 
-    
-
 
 
     function listEvents() {
@@ -193,14 +179,16 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
           for(var i in data) {
             $scope.events[i] = {
               id: data[i].id_evento,
+              allDay: true,
               title: data[i].nome_evento, 
-              start: data[i].data_inicio_evento,
-              end: data[i].data_fim_evento,
+              start: moment(data[i].data_inicio_evento), 
+              end: moment(data[i].data_fim_evento).add(23, 'hours'),
               description: data[i].descricao_evento,
               majorId: data[i].id_curso,
               majorName: data[i].nome_curso,
               subjectId: data[i].id_materia,
               subjectName: data[i].nome_materia,
+              teste: data[i].teste_evento,
               year: data[i].ano_materia + "/" + data[i].semestre_materia
             };
           }
