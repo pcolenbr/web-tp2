@@ -184,6 +184,7 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
               start: moment(data[i].data_inicio_evento), 
               end: moment(data[i].data_fim_evento).add(23, 'hours'),
               description: data[i].descricao_evento,
+              color: data[i].cor_materia,
               majorId: data[i].id_curso,
               majorName: data[i].nome_curso,
               subjectId: data[i].id_materia,

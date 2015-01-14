@@ -6,6 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<title>Agenda</title>
+		<link rel="shortcut icon" href="favicon.ico">
 
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 		<link rel="stylesheet" href="css/toaster.css" type="text/css" />
@@ -13,6 +14,7 @@
 		<link rel="stylesheet" href="css/fullcalendar.min.css" type="text/css" />
 		<link rel="stylesheet" href="css/ngDialog.min.css" type="text/css" />
 		<link rel="stylesheet" href="css/ngDialog-theme-plain.min.css" type="text/css" />
+		<link rel="stylesheet" href="css/spectrum.css" type="text/css" />
 		<link rel="stylesheet" href="css/style.min.css" type="text/css" />
 		
 	</head>
@@ -35,6 +37,9 @@
 	<script src="js/toaster.js"></script>
 	<script src="js/ui-bootstrap.min.js"></script>
 	<script src="js/ui-bootstrap-tpls.min.js"></script>
+	<script src="js/spectrum.js"></script>
+	<script src="js/angular-spectrum-colorpicker.min.js"></script>
+	
 
 	<script src="js/calendar.js"></script>
 	<script src="js/fullcalendar.min.js"></script>

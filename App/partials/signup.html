@@ -1,7 +1,7 @@
 <div id="wrap_signup">
 	<div id="div_form">
 		<div class="page-header">
-			<h1>Create Account</h1>
+			<h1>Sign Up</h1>
 		</div>
 		<form name="signupForm" class="form-horizontal" role="form">
 			<div class="form-group">
@@ -29,11 +29,13 @@
 
 			<div class="form-group">
 				<label for="inputBirthday">Birthday</label>
-				<input type="date" id="inputBirthday" class="input-signup form-control" ng-model="user.birthday"/>
+				<input type="text" id="inputBirthday" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="user.birthday" min-date="1900-01-01" show-button-bar="false" close-text="Close" is-open="birthday.isOpen" ng-click="birthday.isOpen = true"/>
 			</form>
 
-			<a class="p_link_hover" href="#/login"><i class="glyphicon glyphicon-arrow-left"></i>Back</a>
-			<button type="submit" class="pull-right btn btn-md btn-primary" ng-click="signUp(user)" data-ng-disabled="signupForm.$invalid">Sign Up</button>
+			<div class="div-buttons">
+				<a class="p_link_hover" href="#/login"><i class="glyphicon glyphicon-arrow-left"></i>Back</a>
+				<button type="submit" class="pull-right btn btn-md btn-primary" ng-click="signUp(user)" data-ng-disabled="signupForm.$invalid">Sign Up</button>
+			</div>
 		</form>
 	</div>
 </div>

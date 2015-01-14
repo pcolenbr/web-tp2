@@ -1,4 +1,4 @@
-var app = angular.module('agendaApp', ['ngRoute', 'ngAnimate' , 'toaster', 'ui.calendar', 'ngDialog', 'ui.bootstrap']);
+var app = angular.module('agendaApp', ['ngRoute', 'ngAnimate' , 'toaster', 'ui.calendar', 'ngDialog', 'ui.bootstrap', 'angularSpectrumColorpicker']);
 
 app.config(['$routeProvider',
 	function ($routeProvider) {
