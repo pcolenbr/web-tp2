@@ -56,7 +56,7 @@ app.controller('calendarCtrl', function ($scope, $compile, Data, ngDialog) {
   $scope.calendarConfig = {
       calendar:{
           editable: true,
-          //lang: 'pt-br',
+          lang: 'en',
           header:{
               left: 'month agendaWeek agendaDay',
               center: 'title',

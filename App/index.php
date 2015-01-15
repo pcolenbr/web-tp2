@@ -39,7 +39,6 @@
 	<script src="js/ui-bootstrap-tpls.min.js"></script>
 	<script src="js/spectrum.js"></script>
 	<script src="js/angular-spectrum-colorpicker.min.js"></script>
-	
 
 	<script src="js/calendar.js"></script>
 	<script src="js/fullcalendar.min.js"></script>
