@@ -36,7 +36,7 @@ $app->post('/createEvent', function() use ($app) {
     $r = json_decode($app->request->getBody());
     $response = array();
 
-    verifyRequiredParams(array('nm', 'description', 'major', 'subjectId', 'start', 'endd'), $r->currentEvent);
+    verifyRequiredParams(array('nm', 'description', 'major', 'subjectId', 'start', 'end'), $r->currentEvent);
 
     $db = new DB_Handler();
 
